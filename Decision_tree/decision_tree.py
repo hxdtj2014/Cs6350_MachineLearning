@@ -175,13 +175,15 @@ def decision_tree(dataset, att_dic, tree_depth, ig_type):
 
     tree = {best_attr:{}} # create a root
 
-    label_idx = df.shape[1]-1
-
-    # updata the dataset
-    # index_max_GI = igcalculation(df)[0].index(max(igcalculation(df)[0]))
-
+    # update the dataset
     # reduce tree_depth number each time when calling
-    tree_depth = tree_depth -1
+    tree_depth = tree_depth - 1
+
+    best_attr_col = attr_name_idx(best_attr)
+    label_idx = df.shape[1] - 1
+    b1 = df.loc[:, [best_attr_col, label_idx]]
+    best_attr_vals = att_dic[best_attr]
+
 
     for j in range(len(split1[1])):
         split_idx = split1[1]  # take the indices, which is a list
@@ -190,28 +192,35 @@ def decision_tree(dataset, att_dic, tree_depth, ig_type):
         ig2 = igcalculation(s)[ig_type]
 
         # select the purest attr_value to label. Otherwise,
-        s_1 = dataset.loc[idx, label_idx]
+        s_1 = dataset.loc[idx, df.shape[1] - 1]
         s_2 = s_1.value_counts()
+
 
         if len(s_2) == 1:
             attr_value = list(split_idx[j].keys())[0] # fetch the key in dict, the attribute value
             tree[best_attr][attr_value] = dataset.loc[idx[0], dataset.shape[1]-1] # right side is the label
-
         else:
             split2 = get_split(s, ig2)
             sub_attr_name = split2[0]    # the attribute name for next round of splitting
             attr_value = list(split_idx[j].keys())[0]  # fetch the key in dict, the attribute value
-            #tree[attr_name][attr_value] = {subattr_name: idx} # idx is the row_number of the subdataset
+            # tree[attr_name][attr_value] = {subattr_name: idx} # idx is the row_number of the subdataset
 
             # tree[attr_name][attr_value] = {sub_attr_name: {}}
-            tree[best_attr][attr_value] = {sub_attr_name: att_dic[sub_attr_name]} # a single layer of decision tree
-            reduced_data = dataset.loc[idx, :]  # fetch the impure sub_data set for further splitting
+            attr_val = best_attr_vals[j]
+            sub_idx = b1[b1.loc[:, best_attr_col] == attr_val].index.tolist()  # the row index
+            attr_val_label = b1.loc[sub_idx, label_idx]
+            major_label = attr_val_label.value_counts()  # fetch the major label
+            hh = pd.DataFrame(list(major_label.index))
+            major = hh[0][0]
+
+            tree[best_attr][attr_value] = major  # a single layer of decision tree
+            reduced_data = dataset.loc[idx, :]   # fetch the impure sub_data set for further splitting
 
             if tree_depth > -1:
                 sub_tree = decision_tree(reduced_data, att_dic, tree_depth, ig_type)  # call the tree recursively
                 tree[best_attr][attr_value] = sub_tree
             else:
-                return
+                return tree[best_attr][attr_value]
     return tree
 
 
