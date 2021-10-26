@@ -304,23 +304,24 @@ def label_check(dt, inst):
 # predict the label of an instance
 
 def label_predict(dt, inst):
-    '''
-    Description: check whether an instance belong to a decision tree.
+    """
+    Description: predict a label for an instance according to its attributes and the given decision tree
     On input:
             dt: the generated decision trees
             inst: a single instance in a list
     On output:
             predicted label, according to the attributes of the instance via the given decision tree
-    '''
-    k = list(dt.keys())[0] # take the key in the dict and let it serve as a variable.
-    idx = attr_name_idx(k) # take the column idx of the attribute.
-
-    if isinstance(dt[k][inst[idx]], dict):
-        dt_sub = dt[k][inst[idx]]  # recursively fetching
-        label = label_predict(dt_sub, inst)
-    else:
-        label = dt[k][inst[idx]]
-
+    """
+    k = list(dt.keys())[0]  # take the key in the dict and let it serve as a variable.
+    idx = attr_name_idx(k)  # take the column idx of the attribute.
+    try:
+        if isinstance(dt[k][inst[idx]], dict):
+            dt_sub = dt[k][inst[idx]]  # recursively fetching
+            label = label_predict(dt_sub, inst)
+        else:
+            label = dt[k][inst[idx]]
+    except KeyError:  # exclude the situation where the key does not exist, i.e., the dict fails to predict
+        label = 0  #'None'
     return label
 
 
@@ -329,6 +330,19 @@ instance1 = ['med', 'low', '2', '2', 'small', 'high', 'unacc']
 
 ccc = label_check(trial_of_decision_tree, instance)
 # print(ccc)
+
+def prediction_dataframe(dt, data_set):
+    """
+    :param dt: the given decision trees
+    :param data_set: the set of examples, rows corresponds to the example, columns to the attributes
+    :return: a list for the predicted labels for each sample
+    """
+    predictions = []
+    num_of_examples = len(data_set)
+    for n in range(num_of_examples):
+        predicted_label = label_predict(dt, data_set.loc[n,:])
+        predictions.append(predicted_label)
+    return predictions
 
 # predict the label
 predicted = []
