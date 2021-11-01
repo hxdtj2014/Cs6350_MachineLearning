@@ -2,4 +2,7 @@ Run the code directly, the code for each section of the assignment is at the end
 This applies to the AdaBoost algorithm, Random Forests, and the Bagging algorithms.
 
 Just remove the double quotes at the end of each py files to run the code. The results should be the
-same with those in the report
+same with those in the report.
+
+
+The decision tree is already included in each file in this folder. Please use these trees in THIS folder.
