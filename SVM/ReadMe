@@ -1,9 +1,11 @@
 Problem 2
-primal_SVM.py:  just change the file path, and run the code, the results will be printed automatically.
-                switch q = 1 or 2 at line 203 to generate results for 2(a) and 2(b), respectively.
+primal_SVM.py:  just change the file path, and run the code. the results will be printed automatically.
+                           switch q = 1 or 2 at line 203 to generate results for 2(a) and 2(b), respectively.
 Problem 3
-dual_SVM.file: just change the file path, and run the code, the results will be printed automatically.
-dual_SVM.py: just change the file path, and run the code, the results will be printed automatically.
+3(a)
+dual_SVM.file: just change the file path, and run the code. the results will be printed automatically.
+3(b)
+dual_SVM_G.py: just change the file path, and run the code. the results will be printed automatically.
 
 Bounus problem
-dnp.py: just change the file path, and run the code, the results will be printed automatically.
+dnp.py: just change the file path, and run the code. the results will be printed automatically.
