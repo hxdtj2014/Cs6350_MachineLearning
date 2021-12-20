@@ -1,3 +1,6 @@
+Use the preprocessed data in the preprocessed data file folder to rerun the code.
+If needed, you can use the preprocessing code, i.e., Final_report_Data_prepr_OHE.py and Final_report_Data_prepr_bincount.py to regenerate the preprocessed data.
+#########################################################################
 (a) code for data preprocessing
 one hot encoding technique (OHE):
 	Final_report_Data_prep_OHE.py
