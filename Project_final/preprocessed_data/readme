@@ -1,0 +1,5 @@
+test_p: test data processed by OHE
+train_p: train data processed by OHE
+
+train_bin_count:train data processed by bin counting
+test_bin_count: test data processed by bin counting
