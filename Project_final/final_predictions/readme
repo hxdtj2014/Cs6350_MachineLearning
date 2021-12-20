@@ -1,1 +1,7 @@
 
+test_OHE_lr: prediction by logistic regression using data test_p.csv (OneHotEncoding)
+test_OHE_NN: prediction by Neural networks using data test_p.csv (OneHotEncoding)
+
+test_bc_lr: prediction by logistic regression using data test_p.csv (bin counting)
+test_bc_NN: prediction by Neural networks using data test_p.csv (bin counting)
+ 
